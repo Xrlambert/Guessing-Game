@@ -38,6 +38,7 @@
             this.testDisp = new System.Windows.Forms.Label();
             this.resetButton = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
+            this.countBox = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -117,6 +118,7 @@
             this.testDisp.Size = new System.Drawing.Size(16, 13);
             this.testDisp.TabIndex = 6;
             this.testDisp.Text = "---";
+            this.testDisp.Visible = false;
             // 
             // resetButton
             // 
@@ -140,12 +142,26 @@
             this.label3.Size = new System.Drawing.Size(0, 13);
             this.label3.TabIndex = 8;
             // 
+            // countBox
+            // 
+            this.countBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.countBox.ForeColor = System.Drawing.Color.White;
+            this.countBox.Location = new System.Drawing.Point(24, 184);
+            this.countBox.Name = "countBox";
+            this.countBox.Size = new System.Drawing.Size(108, 23);
+            this.countBox.TabIndex = 9;
+            this.countBox.Text = "Guess #:";
+            this.countBox.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.countBox.Visible = false;
+            this.countBox.Click += new System.EventHandler(this.countBox_Click);
+            // 
             // Guessing_Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(388, 360);
+            this.Controls.Add(this.countBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.resetButton);
             this.Controls.Add(this.testDisp);
@@ -174,6 +190,7 @@
         private System.Windows.Forms.Label testDisp;
         private System.Windows.Forms.Button resetButton;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label countBox;
     }
 }
 

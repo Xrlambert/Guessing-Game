@@ -13,62 +13,59 @@ namespace Guessing_Game
 {
     public partial class Guessing_Game : Form
     {
-        Random randGen = new Random();
-        int userInput;
-        int secretNumber;
-        int guessCount = 1;
+        Random randGen = new Random(); // Random number generator
+        int userInput;                 // Stores user's guess
+        int secretNumber;              // Secret number to guess
+        int guessCount;                // Number of guesses made
+
         public Guessing_Game()
         {
             InitializeComponent();
-            secretNumber = randGen.Next(1, 101);
+            secretNumber = randGen.Next(1, 101); // Generate secret number between 1–100
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
+        private void label1_Click(object sender, EventArgs e) { }
 
         private async void GuessButton_Click(object sender, EventArgs e)
         {
-            
-            testDisp.Text = secretNumber.ToString();
+            testDisp.Text = secretNumber.ToString(); // Display secret number (for testing)
+
             SoundPlayer error = new SoundPlayer(Properties.Resources.errorSfx);
             SoundPlayer ding = new SoundPlayer(Properties.Resources.dingSfx);
             SoundPlayer nope = new SoundPlayer(Properties.Resources.nopeSfx);
-            // Parse user input from text box
 
+            if (GuessBox.Text.Contains("dev")) testDisp.Visible = !testDisp.Visible; // Dev mode toggle
 
+            // Validate input and ensure it's within range
             if (int.TryParse(GuessBox.Text, out userInput) && userInput >= 1 && userInput <= 100)
             {
-                //create difference between the two numbers for hot cold comparison
-                int diff = (secretNumber - userInput);
+                int diff = (secretNumber - userInput); // Calculate difference for hint logic
 
-                guessCount++;
+                guessCount++; // Increment guess count
+                countBox.Text = "Guess #:" + guessCount;
+                countBox.Visible = true;
+                feedback.Visible = true;
 
-                //call function for response
+                // Provide feedback based on guess direction
                 if (diff < 0)
                 {
                     feedback.Text = GetHint(diff) + ", Too High!";
                     nope.Play();
-
                 }
                 else if (diff > 0)
                 {
                     feedback.Text = GetHint(diff) + ", Too Low";
                     nope.Play();
-
                 }
                 else
                 {
-                    feedback.Text = GetHint(diff);
+                    feedback.Text = GetHint(diff); // Correct guess
                     ding.Play();
-                    resetButton.Text = GetHint(diff);
                 }
-
-
             }
             else
             {
+                // Handle invalid input
                 feedback.ForeColor = Color.Red;
                 feedback.Text = "Invalid Input";
                 error.Play();
@@ -77,26 +74,15 @@ namespace Guessing_Game
                 feedback.ForeColor = Color.White;
                 return;
             }
-            
-            if (userInput == secretNumber)
-            {
-                resetButton.Visible = true;
-            }
 
-
+            if (userInput == secretNumber) resetButton.Visible = true; // Show reset if correct
         }
 
-        private void GuessBox_TextChanged(object sender, EventArgs e)
-        {
+        private void GuessBox_TextChanged(object sender, EventArgs e) { }
 
-        }
+        private void label3_Click(object sender, EventArgs e) { }
 
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        //function for finding the most appropriate response for user input compared with the number
+        // Generate hint based on proximity to secret number
         private string GetHint(int difference)
         {
             difference = Math.Abs(difference);
@@ -111,8 +97,15 @@ namespace Guessing_Game
 
         private void resetButton_Click(object sender, EventArgs e)
         {
+            // Reset game state
             resetButton.Visible = false;
             secretNumber = randGen.Next(1, 101);
+            GuessBox.Text = "";
+            guessCount = 0;
+            countBox.Visible = false;
+            feedback.Visible = false;
         }
+
+        private void countBox_Click(object sender, EventArgs e) { }
     }
 }
